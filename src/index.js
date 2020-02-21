@@ -18,25 +18,20 @@ function Square(props) {
         />
       );
     }
-  
+
     render() {
+      const boards = [];
+      for(let i = 0; i < 9; i = i + 3) {
+        boards.push([this.renderSquare(i),this.renderSquare(i + 1),this.renderSquare(i + 2)]);
+      }
+      
       return (
         <div>
-          <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-          </div>
+          {boards.map(b => 
+            <div className="board-row">
+              {b}
+            </div>
+            )}
         </div>
       );
     }
