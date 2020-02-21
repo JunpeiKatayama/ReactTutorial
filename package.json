@@ -11,6 +11,7 @@
     "react-scripts": "3.4.0"
   },
   "scripts": {
+    "format": "prettier --write 'src/**/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -30,5 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
   }
 }

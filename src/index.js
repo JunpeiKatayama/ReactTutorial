@@ -1,6 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
+class Button extends React.Component {
+  render() {
+    const sortBy = this.props.isSortByDESC ? 'DESC' : 'ASC';
+    return (
+      <button onClick={() =>this.props.onClick()}>
+        {sortBy}
+      </button>
+    );
+  };
+}
 function Square(props) {
     return (
       <button className="square" onClick={props.onClick}>
@@ -24,7 +35,7 @@ function Square(props) {
       for(let i = 0; i < 9; i = i + 3) {
         boards.push([this.renderSquare(i),this.renderSquare(i + 1),this.renderSquare(i + 2)]);
       }
-      
+
       return (
         <div>
           {boards.map(b => 
@@ -49,7 +60,8 @@ function Square(props) {
           }
         ],
         stepNumber: 0,
-        xIsNext: true
+        xIsNext: true,
+        isSortByDESC: true,
       };
     }
   
@@ -102,25 +114,36 @@ function Square(props) {
         xIsNext: (step % 2) === 0
       });
     }
+
+    handleSort() {
+      this.setState({
+        isSortByDESC: !this.state.isSortByDESC,
+      });
+    }
   
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
+      const isSortByDESC = this.state.isSortByDESC;
 
       const moves = history.map((step, move) => {
-        const desc = move ?
+        const asc = move ?
           'Go to move #' + move + '('  + step.cols + ',' + step.rows + ')':
           'Go to game start';
-        let style = false;
+        const desc = move ?
+          'Go to move#' + (history.length - move) + '('  + step.cols + ',' + step.rows + ')':
+          'Go to game start';
+          let style = false;
+        const sortBy = isSortByDESC ? desc : asc;
         if(move === this.state.stepNumber) {
             style = true;
         }
         return (
           <li key={move} >
             {style ?
-                <button style={{fontWeight: 1000}} onClick={() => this.jumpTo(move)}>{desc}</button> :
-                <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                <button style={{fontWeight: 1000}} onClick={() => this.jumpTo(move)}>{sortBy}</button> :
+                <button onClick={() => this.jumpTo(move)}>{sortBy}</button>
             }
           </li>
         );
@@ -143,6 +166,9 @@ function Square(props) {
           </div>
           <div className="game-info">
             <div>{status}</div>
+            <Button
+              isSortByDESC={isSortByDESC} 
+              onClick={() => this.handleSort()}/>
             <ol>{moves}</ol>
           </div>
         </div>
