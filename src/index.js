@@ -166,14 +166,18 @@ function Square(props) {
           </li>
         );
       });
-  
+      
       let status;
       let hilights;
       if (winner) {
         status = "Winner: " + winner[0];
         hilights = winner[1];
       } else {
-        status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+        if(this.state.stepNumber === 9) {
+          status = "drow";
+        } else {
+          status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+        }
       }
   
       return (
