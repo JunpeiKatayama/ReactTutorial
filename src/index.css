@@ -7,6 +7,10 @@ body {
     padding-left: 30px;
   }
   
+  .red {
+    color: red;
+  }
+  
   .board-row:after {
     clear: both;
     content: "";
